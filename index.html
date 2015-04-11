@@ -5,15 +5,42 @@
     <title>BZSE</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="/static/css/base.css">
+    <script src="/static/vendor/js/underscore.min.js"></script>
+    <script src="/static/vendor/js/angular.min.js"></script>
+    <script src="/static/vendor/js/angular-animate.min.js"></script>
+    <script src="/static/vendor/js/angular-cookies.min.js"></script>
+    <script src="/static/vendor/js/angular-resource.min.js"></script>
+    <script src="/static/vendor/js/angular-route.min.js"></script>
 </head>
-<body>
+<body ng-app="bzseApp" ng-controller="BZSEController">
     <header class="header">
         <div class="container">
             <h1>BZSE</h1>
         </div>
     </header>
-    <div class="container">
 
+    <div id="content" class="container">
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Bid Price</th>
+                    <th>Ask Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in symbolData" ng-if="!data.error">
+                    <td>[[ data.name ]] ([[ data.symbol ]])</td>
+                    <td>[[ data.bidPrice ]]</td>
+                    <td>[[ data.askPrice ]]</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/controllers.js"></script>
+    <script src="/static/js/directives.js"></script>
+    <script src="/static/js/services.js"></script>
 </body>
 </html>
