@@ -17,7 +17,7 @@ bzseControllers.controller('BZSEController', [
                             mockData[symbol] = promise.data[symbol];
                         } else {
                             mockData[symbol] = {
-                                "error": {"code": 1, "message": "Unknown symbol."}
+                                "error": {"code": 2, "message": "Symbol data not available."}
                             };
                         }
                     });
