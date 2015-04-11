@@ -5,11 +5,11 @@ bzseControllers.controller('BZSEController', [
     'BZSEFactory',
     function($scope, BZSEFactory){
         var symbols = "F,DOGG";
-        BZSEFactory.getSymbolData(symbols).then(
-            function(promise){
-                $scope.symbolData = _.values(promise.data);
-            },
-            function(e){
+        // BZSEFactory.getSymbolData(symbols).then(
+        //     function(promise){
+        //         $scope.symbolData = _.values(promise.data);
+        //     },
+        //     function(e){
                 BZSEFactory.getMockSymbolData(symbols).then(function(promise){
                     var mockData = {};
                     _.each(symbols.split(','), function(symbol){
@@ -23,7 +23,7 @@ bzseControllers.controller('BZSEController', [
                     });
                     $scope.symbolData = _.values(mockData);
                 });
-            }
-        );
+        //     }
+        // );
     }
 ]);
