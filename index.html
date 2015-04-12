@@ -75,7 +75,38 @@
         </table>
 
         <div id="portfolio">
-            <h2>Portfolio <span id="cash">[[ bzse.cash | currency ]]</span></h2>
+            <h2>
+                Current Portfolio
+                <span id="cash">Cash: [[ bzse.cash | currency ]]</span>
+            </h2>
+
+            <p class="well pure-success">
+                Your portfolio is empty. Invest some of that green!
+            </p>
+
+            <table id="" class="pure-table pure-table-horizontal"
+                   ng-if="bzse.portfolio.length">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Quantity</th>
+                        <th>Price Paid</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in bxse.portfolio">
+                        <td>[[ item.company ]]</td>
+                        <td>[[ item.quantity ]]</td>
+                        <td>[[ item.pricePaid ]]</td>
+                        <td>
+                            <button class="pure-button pure-button-primary">
+                                View Current
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
