@@ -26,18 +26,14 @@ bzseControllers.controller('BZSEController', [
             var ensureSymbolProperty = function(list, symbols){
                 _.each(list, function(item, i){item.symbol = symbols[i]})
             }
-            var filterData = function(list){
-                return _.reject(list, function(item){return item.error})
-            }
-            var filterErrors = function(list){
-                return _.filter(list, function(item){return item.error})
-            }
 
             var tailorData = function(data){
                 var symbolData = _.values(data);
                 ensureSymbolProperty(symbolData, symbolList);
-                $scope.symbolData = filterData(symbolData);
-                $scope.symbolErrors = filterErrors(symbolData);
+                $scope.bzse.symbols.data =
+                    _.reject(symbolData, function(item){return item.error});
+                $scope.bzse.symbols.errors =
+                    _.filter(symbolData, function(item){return item.error});
             }
 
             // BZSEFactory.getSymbolData(symbols).then(

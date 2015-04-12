@@ -18,24 +18,32 @@
             <h1>BZSE</h1>
 
             <form class="pure-form">
-                <input type="text" id="symbol-input"
-                       placeholder="Enter symbols..." ng-model="symbolInput">
+                <span class="input-wrapper">
+                    <input type="text" id="symbol-input"
+                           placeholder="Enter symbols..."
+                           ng-model="bzse.symbols.input">
+                    <span id="clear-symbols"
+                          ng-show="bzse.symbols.input" ng-click="bzse.symbols={}">
+                        &times;
+                    </span>
+
+                </span>
                 <button class="pure-button-primary pure-button"
-                        ng-disabled="!symbolInput"
-                        ng-click="getSymbolData(symbolInput)">Lookup</button>
+                        ng-disabled="!bzse.symbols.input"
+                        ng-click="getSymbolData(bzse.symbols.input)">Lookup</button>
             </form>
         </div>
     </header>
 
     <div id="content" class="container">
-        <p class="well pure-error" ng-if="symbolErrors.length">
+        <p class="well pure-error" ng-if="bzse.symbols.errors.length">
             No data available for
-            <span ng-repeat="error in symbolErrors" class="error-symbol">
+            <span ng-repeat="error in bzse.symbols.errors" class="error-symbol">
                 [[ error.symbol ]]</span>.
         </p>
 
         <table id="symbol-lookup" class="pure-table pure-table-horizontal"
-               ng-if="symbolData.length">
+               ng-if="bzse.symbols.data.length">
             <thead>
                 <tr>
                     <th>Company</th>
@@ -47,7 +55,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="data in symbolData">
+                <tr ng-repeat="data in bzse.symbols.data">
                     <td>[[ data.name ]] ([[ data.symbol ]])</td>
                     <td>$[[ data.bidPrice ]]</td>
                     <td>$[[ data.askPrice ]]</td>

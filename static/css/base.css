@@ -27,6 +27,25 @@ header form{
     margin-top: -2px;
 }
 
+.input-wrapper{
+    position: relative;
+}
+.input-wrapper input[type="text"]{
+    padding-right: 25px;
+}
+
+#clear-symbols{
+    position: absolute;
+    top: 0;
+    right: 14px;
+    opacity: .4;
+}
+
+#clear-symbols:hover{
+    opacity: .7;
+    cursor: pointer;
+}
+
 #content{padding: 15px;}
 
 #symbol-lookup{
