@@ -8,7 +8,11 @@ bzseControllers.controller('BZSEController', [
     function($scope, $cookieStore, ngToast, BZSEFactory){
         $scope.initialCash = 100000;
         $scope.resetBZSE = function(){
-            $scope.bzse = {cash: $scope.initialCash, portfolio: []};
+            $scope.bzse = {
+                cash: $scope.initialCash,
+                portfolio: [],
+                portfolioQuantities: {},
+            };
         }
 
         $scope.bzse = $cookieStore.get('bzse');
@@ -27,10 +31,8 @@ bzseControllers.controller('BZSEController', [
                 _.each(list, function(item, i){
                     item.symbol = symbols[i];
                     item.quantity = 0;
-                    item.portfolio = _.findWhere(
-                        $scope.bzse.portfolio, {symbol: item.symbol}
-                    );
-                })
+                    item.portfolioQty = $scope.bzse.portfolioQuantities[item.symbol];
+                });
             }
 
             var tailorData = function(data){
@@ -62,6 +64,14 @@ bzseControllers.controller('BZSEController', [
                     pricePaid: data.askPrice,
                 });
                 $scope.bzse.cash -= cost;
+
+                if ($scope.bzse.portfolioQuantities[data.symbol]){
+                    $scope.bzse.portfolioQuantities[data.symbol] += data.quantity;
+                } else {
+                    $scope.bzse.portfolioQuantities[data.symbol] = data.quantity;
+                }
+                data.portfolioQty = $scope.bzse.portfolioQuantities[data.symbol];
+
                 ngToast.create('Successfully bought ' + data.quantity + ' ' +
                                data.symbol + ' stocks for $' + cost + '.');
             } else {

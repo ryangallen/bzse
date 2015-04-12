@@ -86,8 +86,7 @@
                         <button class="pure-button pure-success"
                                 ng-click="sellStock(data)"
                                 ng-disabled="!data.quantity ||
-                                             !data.portfolio ||
-                                             (data.portfolio && data.quantity > data.portfolio.quantity)">
+                                             (data.portfolioQty && data.quantity > data.portfolioQty)">
                                 Sell
                                 <span ng-if="data.quantity">
                                     [[ data.bidPrice * data.quantity | currency ]]
