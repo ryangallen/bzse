@@ -78,7 +78,9 @@
                     <td>
                         <button class="pure-button pure-success"
                                 ng-click="sellStock(data)"
-                                ng-disabled="!data.quantity">
+                                ng-disabled="!data.quantity ||
+                                             !data.portfolio ||
+                                             (data.portfolio && data.quantity > data.portfolio.quantity)">
                                 Sell
                                 <span ng-if="data.quantity">
                                     [[ data.bidPrice * data.quantity | currency ]]
@@ -95,7 +97,7 @@
                 <span id="cash">Cash: [[ bzse.cash | currency ]]</span>
             </h2>
 
-            <p class="well pure-success">
+            <p class="well">
                 Your portfolio is empty. Invest some of that green!
             </p>
 
