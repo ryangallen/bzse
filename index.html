@@ -13,26 +13,57 @@
     <script src="/static/vendor/js/angular-route.min.js"></script>
 </head>
 <body ng-app="bzseApp" ng-controller="BZSEController">
-    <header class="header">
+    <header class="header cf">
         <div class="container">
             <h1>BZSE</h1>
+
+            <form class="pure-form">
+                <input type="text" id="symbol-input"
+                       placeholder="Enter symbols..." ng-model="symbolInput">
+                <button class="pure-pure-primary pure-button"
+                        ng-click="getSymbolData(symbolInput)">Look Up</button>
+            </form>
         </div>
     </header>
 
     <div id="content" class="container">
-        <table class="pure-table">
+        <p class="well center pure-secondary"
+           ng-hide="symbolData.length || symbolErrors.length">
+            Enter symbols in the search box.
+        </p>
+        <p class="well pure-error" ng-show="symbolErrors.length">
+            No data available for
+            <span ng-repeat="error in symbolErrors" class="error-symbol">
+                [[ error.symbol ]]</span>.
+        </p>
+        <table id="symbol-lookup" class="pure-table pure-table-horizontal"
+               ng-show="symbolData.length">
             <thead>
                 <tr>
                     <th>Company</th>
                     <th>Bid Price</th>
                     <th>Ask Price</th>
+                    <th>Quantity</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="data in symbolData" ng-if="!data.error">
+                <tr ng-repeat="data in symbolData">
                     <td>[[ data.name ]] ([[ data.symbol ]])</td>
-                    <td>[[ data.bidPrice ]]</td>
-                    <td>[[ data.askPrice ]]</td>
+                    <td>$[[ data.bidPrice ]]</td>
+                    <td>$[[ data.askPrice ]]</td>
+                    <td>
+                        <form class="pure-form">
+                            <input type="text" class="qty-input">
+                        </form>
+                    </td>
+                    <td>
+                        <button class="pure-button pure-warning">Buy</button>
+                    </td>
+                    <td>
+                        <button class="pure-button pure-success">Sell</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
