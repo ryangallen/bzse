@@ -36,11 +36,11 @@
     </header>
 
     <div id="content" class="container">
-        <p class="well pure-error" ng-if="bzse.symbols.errors.length">
+        <div class="well pure-error" ng-if="bzse.symbols.errors.length">
             No data available for
             <span ng-repeat="error in bzse.symbols.errors" class="error-symbol">
                 [[ error.symbol ]]</span>.
-        </p>
+        </div>
 
         <table id="symbol-lookup" class="pure-table pure-table-horizontal"
                ng-if="bzse.symbols.data.length">
