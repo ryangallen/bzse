@@ -3,8 +3,9 @@ var bzseControllers = angular.module('bzseControllers', ['ngCookies']);
 bzseControllers.controller('BZSEController', [
     '$scope',
     '$cookieStore',
+    'ngToast',
     'BZSEFactory',
-    function($scope, $cookieStore, BZSEFactory){
+    function($scope, $cookieStore, ngToast, BZSEFactory){
         $scope.initialCash = 100000;
         $scope.resetBZSE = function(){
             $scope.bzse = {cash: $scope.initialCash, portfolio: []};
@@ -52,7 +53,23 @@ bzseControllers.controller('BZSEController', [
         }
 
         $scope.buyStock = function(data){
-            console.log('buying');
+            var cost = data.askPrice * data.quantity;
+            if (cost < $scope.bzse.cash){
+                $scope.bzse.portfolio.push({
+                    name: data.name,
+                    symbol: data.symbol,
+                    quantity: data.quantity,
+                    pricePaid: data.askPrice,
+                });
+                $scope.bzse.cash -= cost;
+                ngToast.create('Successfully bought ' + data.quantity + ' ' +
+                               data.symbol + ' stocks for $' + cost + '.');
+            } else {
+                ngToast.create({
+                    className: 'danger',
+                    content: 'You cannot afford to buy that many.'
+                });
+            }
         }
 
         $scope.sellStock = function(data){

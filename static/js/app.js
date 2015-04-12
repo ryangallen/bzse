@@ -1,7 +1,7 @@
 var bzseApp = angular.module('bzseApp', [
     'ngResource',
+    'ngToast',
     'bzseControllers',
-    'bzseDirectives',
     'bzseServices'
 ]);
 

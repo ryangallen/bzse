@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <title>BZSE</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="/static/vendor/css/ngToast.min.css">
+    <link rel="stylesheet" href="/static/vendor/css/ngToast-animations.min.css">
     <link rel="stylesheet" href="/static/css/base.css">
     <script src="/static/vendor/js/underscore.min.js"></script>
-    <script src="/static/vendor/js/angular.min.js"></script>
-    <script src="/static/vendor/js/angular-animate.min.js"></script>
-    <script src="/static/vendor/js/angular-cookies.min.js"></script>
-    <script src="/static/vendor/js/angular-resource.min.js"></script>
-    <script src="/static/vendor/js/angular-route.min.js"></script>
+    <script src="/static/vendor/js/angular/angular.min.js"></script>
+    <script src="/static/vendor/js/angular/angular-animate.min.js"></script>
+    <script src="/static/vendor/js/angular/angular-cookies.min.js"></script>
+    <script src="/static/vendor/js/angular/angular-resource.min.js"></script>
+    <script src="/static/vendor/js/angular/angular-route.min.js"></script>
+    <script src="/static/vendor/js/angular/angular-sanitize.min.js"></script>
+    <script src="/static/vendor/js/ngToast.min.js"></script>
 </head>
 <body ng-app="bzseApp" ng-controller="BZSEController">
+    <toast></toast>
+
     <header class="header cf">
         <div class="container">
             <h1>BZSE</h1>
@@ -28,7 +34,7 @@
                     </span>
 
                 </span>
-                <button class="pure-button-primary pure-button"
+                <button class="pure-button pure-primary"
                         ng-disabled="!bzse.symbols.input"
                         ng-click="getSymbolData(bzse.symbols.input)">Lookup</button>
             </form>
@@ -97,13 +103,13 @@
                 Current Portfolio
                 <span id="cash">Cash:
                     <span ng-class="{green: bzse.cash >= initialCash,
-                                     red: bzse.cash < initialCash}">
+                                     red: bzse.cash < initialCash/10}">
                         [[ bzse.cash | currency ]]
                     </span>
                 </span>
             </h2>
 
-            <p class="well">
+            <p class="well" ng-if="!bzse.portfolio.length">
                 Your portfolio is empty. Invest some of that green!
             </p>
 
@@ -114,16 +120,21 @@
                         <th>Company</th>
                         <th>Quantity</th>
                         <th>Price Paid</th>
-                        <th></th>
+                        <th>View Current</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in bxse.portfolio">
-                        <td>[[ item.company ]]</td>
+                    <tr ng-repeat="item in bzse.portfolio">
+                        <td>[[ item.name ]] ([[ item.symbol ]])</td>
                         <td>[[ item.quantity ]]</td>
-                        <td>[[ item.pricePaid ]]</td>
                         <td>
-                            <button class="pure-button pure-button-primary">
+                            [[ item.pricePaid | currency ]]
+                            <span class="muted">
+                                ([[ item.pricePaid * item.quantity | currency ]])
+                            </span>
+                        </td>
+                        <td>
+                            <button class="pure-button pure-primary">
                                 View Current
                             </button>
                         </td>
@@ -142,7 +153,6 @@
 
     <script src="/static/js/app.js"></script>
     <script src="/static/js/controllers.js"></script>
-    <script src="/static/js/directives.js"></script>
     <script src="/static/js/services.js"></script>
 </body>
 </html>
