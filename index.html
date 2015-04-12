@@ -20,24 +20,22 @@
             <form class="pure-form">
                 <input type="text" id="symbol-input"
                        placeholder="Enter symbols..." ng-model="symbolInput">
-                <button class="pure-pure-primary pure-button"
+                <button class="pure-button-primary pure-button"
+                        ng-disabled="!symbolInput"
                         ng-click="getSymbolData(symbolInput)">Lookup</button>
             </form>
         </div>
     </header>
 
     <div id="content" class="container">
-        <p class="well center pure-secondary"
-           ng-hide="symbolData.length || symbolErrors.length">
-            Enter symbols in the search box.
-        </p>
-        <p class="well pure-error" ng-show="symbolErrors.length">
+        <p class="well pure-error" ng-if="symbolErrors.length">
             No data available for
             <span ng-repeat="error in symbolErrors" class="error-symbol">
                 [[ error.symbol ]]</span>.
         </p>
+
         <table id="symbol-lookup" class="pure-table pure-table-horizontal"
-               ng-show="symbolData.length">
+               ng-if="symbolData.length">
             <thead>
                 <tr>
                     <th>Company</th>

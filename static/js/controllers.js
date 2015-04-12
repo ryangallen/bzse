@@ -19,6 +19,7 @@ bzseControllers.controller('BZSEController', [
         }, true);
 
         $scope.getSymbolData = function(symbols){
+            if (!symbols) return;
             symbols = symbols.replace(/ /g,'');
             var symbolList = symbols.toUpperCase().split(',');
 
