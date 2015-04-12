@@ -6,13 +6,11 @@ bzseControllers.controller('BZSEController', [
     'BZSEFactory',
     function($scope, $cookieStore, BZSEFactory){
         $scope.resetBZSE = function(){
-            $cookieStore.remove('bzse');
+            $scope.bzse = {cash: 100000, portfolio: []};
         }
 
         $scope.bzse = $cookieStore.get('bzse');
-        if (!$scope.bzse){
-            $scope.bzse = {cash: 100000, portfolio: {}}
-        }
+        if (!$scope.bzse){$scope.resetBZSE()}
 
         $scope.$watch('bzse', function(newValue, oldValue) {
             if (newValue != oldValue){$cookieStore.put('bzse', $scope.bzse)}

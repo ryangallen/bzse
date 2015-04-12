@@ -68,6 +68,21 @@ span.error-symbol:first-child:before{content: none;}
 
 #cash{float: right;}
 
+footer{
+    text-align: right;
+    font-size: .85em
+}
+
+footer a, footer a:active, footer a:visited{
+    text-decoration: none;
+    color: #ccc;
+    margin-left: 1.25em;
+}
+
+footer a:hover{
+    color: #aaa;
+}
+
 .container{
     max-width: 1040px;
     margin: 0 auto;
