@@ -102,6 +102,9 @@ footer a:hover{
     box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }
 
+.green{color: rgb(28, 184, 65);}
+.red{color: rgb(202, 60, 60);}
+
 /* extend pure css */
 .pure-success, .pure-error, .pure-warning, .pure-secondary{
     color: white; border-radius: 4px; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);

@@ -5,8 +5,9 @@ bzseControllers.controller('BZSEController', [
     '$cookieStore',
     'BZSEFactory',
     function($scope, $cookieStore, BZSEFactory){
+        $scope.initialCash = 100000;
         $scope.resetBZSE = function(){
-            $scope.bzse = {cash: 100000, portfolio: []};
+            $scope.bzse = {cash: $scope.initialCash, portfolio: []};
         }
 
         $scope.bzse = $cookieStore.get('bzse');

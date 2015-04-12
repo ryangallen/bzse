@@ -68,7 +68,8 @@
                     <td>
                         <button class="pure-button pure-warning"
                                 ng-click="buyStock(data)"
-                                ng-disabled="!data.quantity">
+                                ng-disabled="!data.quantity ||
+                                             data.askPrice * data.quantity > bzse.cash">
                                 Buy
                                 <span ng-if="data.quantity">
                                     [[ data.askPrice * data.quantity | currency ]]
@@ -94,7 +95,12 @@
         <div id="portfolio">
             <h2>
                 Current Portfolio
-                <span id="cash">Cash: [[ bzse.cash | currency ]]</span>
+                <span id="cash">Cash:
+                    <span ng-class="{green: bzse.cash >= initialCash,
+                                     red: bzse.cash < initialCash}">
+                        [[ bzse.cash | currency ]]
+                    </span>
+                </span>
             </h2>
 
             <p class="well">
