@@ -21,7 +21,7 @@ bzseControllers.controller('BZSEController', [
         $scope.getSymbolData = function(symbols){
             if (!symbols) return;
             symbols = symbols.replace(/ /g,'');
-            var symbolList = symbols.toUpperCase().split(',');
+            var symbolArray = symbols.toUpperCase().split(',');
 
             var ensureSymbolProperty = function(list, symbols){
                 _.each(list, function(item, i){item.symbol = symbols[i]})
@@ -29,7 +29,7 @@ bzseControllers.controller('BZSEController', [
 
             var tailorData = function(data){
                 var symbolData = _.values(data);
-                ensureSymbolProperty(symbolData, symbolList);
+                ensureSymbolProperty(symbolData, symbolArray);
                 $scope.bzse.symbols.data =
                     _.reject(symbolData, function(item){return item.error});
                 $scope.bzse.symbols.errors =
@@ -37,23 +37,11 @@ bzseControllers.controller('BZSEController', [
             }
 
             // BZSEFactory.getSymbolData(symbols).then(
-            //     function(promise){
-            //         tailorData(promise.data)
-            //     },
+            //     function(promise){tailorData(promise.data)},
             //     function(){
-                    BZSEFactory.getMockSymbolData().then(function(promise){
-                        var mockData = {};
-                        _.each(symbolList, function(symbol){
-                            if (promise.data[symbol]){
-                                mockData[symbol] = promise.data[symbol];
-                            } else {
-                                mockData[symbol] = {
-                                    "error": {"code": 2, "message": "Symbol data not available."},
-                                };
-                            }
-                        });
-                        tailorData(mockData);
-                    });
+                    BZSEFactory.getMockSymbolData(symbolArray).then(
+                        function(mockData){tailorData(mockData)}
+                    );
             //     }
             // );
         }
