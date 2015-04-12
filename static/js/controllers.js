@@ -1,9 +1,22 @@
-var bzseControllers = angular.module('bzseControllers', []);
+var bzseControllers = angular.module('bzseControllers', ['ngCookies']);
 
 bzseControllers.controller('BZSEController', [
     '$scope',
+    '$cookieStore',
     'BZSEFactory',
-    function($scope, BZSEFactory){
+    function($scope, $cookieStore, BZSEFactory){
+        $scope.resetBZSE = function(){
+            $cookieStore.remove('bzse');
+        }
+
+        $scope.bzse = $cookieStore.get('bzse');
+        if (!$scope.bzse){
+            $scope.bzse = {cash: 100000, portfolio: {}}
+        }
+
+        $scope.$watch('bzse', function(newValue, oldValue) {
+            if (newValue != oldValue){$cookieStore.put('bzse', $scope.bzse)}
+        }, true);
 
         $scope.getSymbolData = function(symbols){
             symbols = symbols.replace(/ /g,'');

@@ -6,6 +6,10 @@
     padding: 0 15px;
 }
 
+h1, h2{
+    font-weight: 300;
+}
+
 header{
     background-color: #222;
     padding: .7em 0 .25em;
@@ -15,7 +19,6 @@ header h1{
     color: #FFF;
     margin: 0;
     font-size: 2.25em;
-    font-weight: 300;
     float: left;
 }
 
@@ -32,6 +35,12 @@ input.qty-input{width: 5em;}
 
 span.error-symbol:before{content: ', ';}
 span.error-symbol:first-child:before{content: none;}
+
+#portfolio{
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+#cash{float: right;}
 
 .center{text-align: center;}
 

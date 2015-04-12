@@ -21,7 +21,7 @@
                 <input type="text" id="symbol-input"
                        placeholder="Enter symbols..." ng-model="symbolInput">
                 <button class="pure-pure-primary pure-button"
-                        ng-click="getSymbolData(symbolInput)">Look Up</button>
+                        ng-click="getSymbolData(symbolInput)">Lookup</button>
             </form>
         </div>
     </header>
@@ -67,6 +67,10 @@
                 </tr>
             </tbody>
         </table>
+
+        <div id="portfolio">
+            <h2>Portfolio <span id="cash">[[ bzse.cash | currency ]]</span></h2>
+        </div>
     </div>
 
     <script src="/static/js/app.js"></script>
