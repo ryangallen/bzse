@@ -47,18 +47,18 @@
             <thead>
                 <tr>
                     <th>Company</th>
-                    <th>Bid Price</th>
                     <th>Ask Price</th>
+                    <th>Bid Price</th>
                     <th>Quantity</th>
-                    <th></th>
-                    <th></th>
+                    <th>Buy</th>
+                    <th>Sell</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="data in bzse.symbols.data">
                     <td>[[ data.name ]] ([[ data.symbol ]])</td>
-                    <td>$[[ data.bidPrice ]]</td>
-                    <td>$[[ data.askPrice ]]</td>
+                    <td>[[ data.askPrice | currency ]]</td>
+                    <td>[[ data.bidPrice | currency ]]</td>
                     <td>
                         <form class="pure-form">
                             <input type="number" class="qty-input" min="0"
@@ -67,11 +67,23 @@
                     </td>
                     <td>
                         <button class="pure-button pure-warning"
-                                ng-click="buyStock(data)">Buy</button>
+                                ng-click="buyStock(data)"
+                                ng-disabled="!data.quantity">
+                                Buy
+                                <span ng-if="data.quantity">
+                                    [[ data.askPrice * data.quantity | currency ]]
+                                </span>
+                        </button>
                     </td>
                     <td>
                         <button class="pure-button pure-success"
-                                ng-click="sellStock(data)">Sell</button>
+                                ng-click="sellStock(data)"
+                                ng-disabled="!data.quantity">
+                                Sell
+                                <span ng-if="data.quantity">
+                                    [[ data.bidPrice * data.quantity | currency ]]
+                                </span>
+                        </button>
                     </td>
                 </tr>
             </tbody>
