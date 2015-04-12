@@ -61,14 +61,17 @@
                     <td>$[[ data.askPrice ]]</td>
                     <td>
                         <form class="pure-form">
-                            <input type="text" class="qty-input">
+                            <input type="number" class="qty-input" min="0"
+                                   ng-model="data.quantity">
                         </form>
                     </td>
                     <td>
-                        <button class="pure-button pure-warning">Buy</button>
+                        <button class="pure-button pure-warning"
+                                ng-click="buyStock(data)">Buy</button>
                     </td>
                     <td>
-                        <button class="pure-button pure-success">Sell</button>
+                        <button class="pure-button pure-success"
+                                ng-click="sellStock(data)">Sell</button>
                     </td>
                 </tr>
             </tbody>

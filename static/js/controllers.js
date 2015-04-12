@@ -21,13 +21,19 @@ bzseControllers.controller('BZSEController', [
             symbols = symbols.replace(/ /g,'');
             var symbolArray = symbols.toUpperCase().split(',');
 
-            var ensureSymbolProperty = function(list, symbols){
-                _.each(list, function(item, i){item.symbol = symbols[i]})
+            var addAdditionalProperties = function(list, symbols){
+                _.each(list, function(item, i){
+                    item.symbol = symbols[i];
+                    item.quantity = 0;
+                    item.portfolio = _.findWhere(
+                        $scope.bzse.portfolio, {symbol: item.symbol}
+                    );
+                })
             }
 
             var tailorData = function(data){
                 var symbolData = _.values(data);
-                ensureSymbolProperty(symbolData, symbolArray);
+                addAdditionalProperties(symbolData, symbolArray);
                 $scope.bzse.symbols.data =
                     _.reject(symbolData, function(item){return item.error});
                 $scope.bzse.symbols.errors =
@@ -42,6 +48,14 @@ bzseControllers.controller('BZSEController', [
                     );
             //     }
             // );
+        }
+
+        $scope.buyStock = function(data){
+            console.log('buying');
+        }
+
+        $scope.sellStock = function(data){
+            console.log('selling');
         }
     }
 ]);
