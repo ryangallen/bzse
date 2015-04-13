@@ -73,7 +73,7 @@ bzseControllers.controller('BZSEController', [
                 data.portfolioQty = $scope.bzse.portfolioQuantities[data.symbol];
 
                 ngToast.create('Successfully bought ' + data.quantity + ' ' +
-                               data.symbol + ' stocks for $' + cost + '.');
+                               data.name + ' stocks for $' + cost + '.');
             } else {
                 ngToast.create({
                     className: 'danger',
