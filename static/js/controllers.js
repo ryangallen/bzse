@@ -27,30 +27,31 @@ bzseControllers.controller('BZSEController', [
 
         $scope.getSymbolData = function(symbols){
             if (!symbols) return;
-            var cleanSymbols = symbols.replace(/ /g,'').toUpperCase();
-            $scope.bzse.symbols.arr = _.compact(cleanSymbols.split(','));
 
             var addAdditionalProperties = function(list){
                 _.each(list, function(item, i){
-                    item.symbol = $scope.bzse.symbols.arr[i];
                     item.quantity = 0;
                     item.portfolio = getPortfolioItem(item.symbol);
                 });
             }
 
             var tailorData = function(data){
+                for (var s in data){data[s].symbol = s}
                 var symbolData = _.values(data);
-                addAdditionalProperties(symbolData);
+
                 $scope.bzse.symbols.data =
                     _.reject(symbolData, function(item){return item.error});
                 $scope.bzse.symbols.errors =
                     _.filter(symbolData, function(item){return item.error});
+
+                addAdditionalProperties($scope.bzse.symbols.data);
             }
 
+            var cleanSymbols = symbols.replace(/ /g,'').toUpperCase();
             // BZSEFactory.getSymbolData(cleanSymbols).then(
             //     function(promise){tailorData(promise.data)},
             //     function(){
-                    BZSEFactory.getMockSymbolData($scope.bzse.symbols.arr).then(
+                    BZSEFactory.getMockSymbolData(cleanSymbols).then(
                         function(mockData){tailorData(mockData)}
                     );
             //     }

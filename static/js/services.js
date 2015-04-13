@@ -7,7 +7,8 @@ bzseServices.factory('BZSEFactory', ['$http', '$q',
             getSymbolData: function(symbols){
                 return $http.get(bzseAPI, {params: {symbols: symbols}});
             },
-            getMockSymbolData: function(symbolArray){
+            getMockSymbolData: function(symbols){
+                var symbolArray = _.compact(symbols.split(','));
                 return $q(function(resolve){
                     $http.get('/static/js/mock_data.json').then(
                         function(promise){
