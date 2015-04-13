@@ -54,14 +54,14 @@ bzseControllers.controller('BZSEController', [
             }
 
             var cleanSymbols = symbols.replace(/ /g,'').toUpperCase();
-            // BZSEFactory.getSymbolData(cleanSymbols).then(
-            //     function(promise){tailorData(promise.data)},
-            //     function(){
+            BZSEFactory.getSymbolData(cleanSymbols).then(
+                function(promise){tailorData(promise.data)},
+                function(){
                     BZSEFactory.getMockSymbolData(cleanSymbols).then(
                         function(mockData){tailorData(mockData)}
                     );
-            //     }
-            // );
+                }
+            );
         }
 
         $scope.buyStock = function(data){
