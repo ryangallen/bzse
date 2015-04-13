@@ -2,6 +2,7 @@
 
 body{
     color: #333;
+    background-color: #002D45;
 }
 
 h1, h2, th{
@@ -10,6 +11,8 @@ h1, h2, th{
 
 header{
     background-color: #222;
+    border-top: 1px solid #181818;
+    border-bottom: 1px solid #181818;
     padding: .7em 0 .25em;
 }
 
@@ -54,11 +57,12 @@ span.error-symbol:first-child:before{content: none;}
 
 #portfolio{
     padding: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #bbb;
+    background-color: #fff;
 }
 
 #portfolio h2{
-    margin: .25em 0;
+    margin: .25em 0 15px;
 }
 
 #cash{float: right;}
@@ -70,12 +74,12 @@ footer{
 
 footer a, footer a:active, footer a:visited{
     text-decoration: none;
-    color: #ccc;
+    color: #5D7989;
     margin-left: 1.25em;
 }
 
 footer a:hover{
-    color: #aaa;
+    color: #8BA0AA;
 }
 
 .container{
@@ -114,6 +118,8 @@ footer a:hover{
 .pure-table{
     width: 100%;
     margin-bottom: 15px;
+    background-color: #fff;
+    border: 1px solid #bbb;
 }
 /* end extend pure css */
 
