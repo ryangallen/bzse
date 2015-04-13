@@ -11,7 +11,6 @@ bzseControllers.controller('BZSEController', [
             $scope.bzse = {
                 cash: $scope.initialCash,
                 portfolio: [],
-                portfolioQuantities: {},
             };
         }
 
@@ -22,6 +21,10 @@ bzseControllers.controller('BZSEController', [
             if (newValue != oldValue){$cookieStore.put('bzse', $scope.bzse)}
         }, true);
 
+        var getPortfolioItem = function(symbol){
+            return _.findWhere($scope.bzse.portfolio, {symbol: symbol});
+        }
+
         $scope.getSymbolData = function(symbols){
             if (!symbols) return;
             symbols = symbols.replace(/ /g,'');
@@ -31,7 +34,7 @@ bzseControllers.controller('BZSEController', [
                 _.each(list, function(item, i){
                     item.symbol = symbols[i];
                     item.quantity = 0;
-                    item.portfolioQty = $scope.bzse.portfolioQuantities[item.symbol];
+                    item.portfolio = getPortfolioItem(item.symbol);
                 });
             }
 
@@ -55,22 +58,29 @@ bzseControllers.controller('BZSEController', [
         }
 
         $scope.buyStock = function(data){
-            var cost = data.askPrice * data.quantity;
+            var cost = (data.askPrice * data.quantity).toFixed(2);
             if (cost < $scope.bzse.cash){
-                $scope.bzse.portfolio.push({
-                    name: data.name,
-                    symbol: data.symbol,
-                    quantity: data.quantity,
-                    pricePaid: data.askPrice,
-                });
-                $scope.bzse.cash -= cost;
-
-                if ($scope.bzse.portfolioQuantities[data.symbol]){
-                    $scope.bzse.portfolioQuantities[data.symbol] += data.quantity;
+                var portfolioItem = getPortfolioItem(data.symbol);
+                if (portfolioItem){
+                    portfolioItem.priceLastPaid = data.askPrice;
+                    portfolioItem.qtyLastPurchased = data.quantity,
+                    portfolioItem.quantity += data.quantity;
                 } else {
-                    $scope.bzse.portfolioQuantities[data.symbol] = data.quantity;
+                    portfolioItem = {
+                        name: data.name,
+                        symbol: data.symbol,
+                        priceLastPaid: data.askPrice,
+                        qtyLastPurchased: data.quantity,
+                        quantity: data.quantity,
+                    }
+                    $scope.bzse.portfolio.push(portfolioItem);
                 }
-                data.portfolioQty = $scope.bzse.portfolioQuantities[data.symbol];
+
+                _.findWhere(
+                    $scope.bzse.symbols.data, {symbol: data.symbol}
+                ).portfolio = portfolioItem;
+
+                $scope.bzse.cash -= cost;
 
                 ngToast.create('Successfully bought ' + data.quantity + ' ' +
                                data.name + ' stocks for $' + cost + '.');
