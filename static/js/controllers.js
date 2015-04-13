@@ -83,12 +83,12 @@ bzseControllers.controller('BZSEController', [
 
                 $scope.bzse.cash -= parseFloat(cost);
                 ngToast.create('Bought ' + data.quantity + ' ' +
-                               data.name + ' stocks for $' + cost + '.');
+                               data.name + ' stocks for $' + cost);
             } else {
                 ngToast.create({
                     className: 'danger',
                     content: 'You cannot afford to buy ' + data.quantity + ' ' +
-                              data.name + ' stocks.'
+                              data.name + ' stocks'
                 });
             }
         }
@@ -107,13 +107,13 @@ bzseControllers.controller('BZSEController', [
                 var earning = (data.bidPrice * data.quantity).toFixed(2);
                 $scope.bzse.cash += parseFloat(earning);
                 ngToast.create('Sold ' + data.quantity + ' ' +
-                               data.name + ' stocks for $' + earning + '.');
+                               data.name + ' stocks for $' + earning);
 
             } else {
                 ngToast.create({
                     className: 'danger',
                     content: 'You do not have ' + data.quantity + ' ' +
-                              data.name + ' stocks to sell.'
+                              data.name + ' stocks to sell'
                 });
             }
         }
