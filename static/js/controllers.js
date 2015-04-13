@@ -14,11 +14,17 @@ bzseControllers.controller('BZSEController', [
             };
         }
 
-        $scope.bzse = $cookieStore.get('bzse');
-        if (!$scope.bzse){$scope.resetBZSE()}
+        $scope.bzse = {
+            cash: $cookieStore.get('bzsecash'),
+            portfolio: $cookieStore.get('bzseportfolio'),
+        }
+        if (!$scope.bzse.cash){$scope.resetBZSE()}
 
-        $scope.$watch('bzse', function(newValue, oldValue) {
-            if (newValue != oldValue){$cookieStore.put('bzse', $scope.bzse)}
+        $scope.$watch('bzse', function(newBZSE, oldBZSE) {
+            if (newBZSE != oldBZSE){
+                $cookieStore.put('bzsecash', newBZSE.cash);
+                $cookieStore.put('bzseportfolio', newBZSE.portfolio);
+            }
         }, true);
 
         var getPortfolioItem = function(symbol){
