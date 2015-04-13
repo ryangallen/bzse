@@ -27,12 +27,12 @@ bzseControllers.controller('BZSEController', [
 
         $scope.getSymbolData = function(symbols){
             if (!symbols) return;
-            symbols = symbols.replace(/ /g,'');
-            var symbolArray = symbols.toUpperCase().split(',');
+            var cleanSymbols = symbols.replace(/ /g,'').toUpperCase();
+            $scope.bzse.symbols.arr = _.compact(cleanSymbols.split(','));
 
-            var addAdditionalProperties = function(list, symbols){
+            var addAdditionalProperties = function(list){
                 _.each(list, function(item, i){
-                    item.symbol = symbols[i];
+                    item.symbol = $scope.bzse.symbols.arr[i];
                     item.quantity = 0;
                     item.portfolio = getPortfolioItem(item.symbol);
                 });
@@ -40,17 +40,17 @@ bzseControllers.controller('BZSEController', [
 
             var tailorData = function(data){
                 var symbolData = _.values(data);
-                addAdditionalProperties(symbolData, symbolArray);
+                addAdditionalProperties(symbolData);
                 $scope.bzse.symbols.data =
                     _.reject(symbolData, function(item){return item.error});
                 $scope.bzse.symbols.errors =
                     _.filter(symbolData, function(item){return item.error});
             }
 
-            // BZSEFactory.getSymbolData(symbols).then(
+            // BZSEFactory.getSymbolData(cleanSymbols).then(
             //     function(promise){tailorData(promise.data)},
             //     function(){
-                    BZSEFactory.getMockSymbolData(symbolArray).then(
+                    BZSEFactory.getMockSymbolData($scope.bzse.symbols.arr).then(
                         function(mockData){tailorData(mockData)}
                     );
             //     }
@@ -94,6 +94,10 @@ bzseControllers.controller('BZSEController', [
 
         $scope.sellStock = function(data){
             console.log('selling');
+        }
+
+        $scope.viewCurrent = function(symbol){
+            $scope.getSymbolData(symbol)
         }
     }
 ]);
