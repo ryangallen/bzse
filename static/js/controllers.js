@@ -53,7 +53,7 @@ bzseControllers.controller('BZSEController', [
                 addAdditionalProperties($scope.bzse.symbols.data);
             }
 
-            var cleanSymbols = symbols.replace(/ /g,'').toUpperCase();
+            var cleanSymbols = symbols.replace(/ /g,',').toUpperCase();
             BZSEFactory.getSymbolData(cleanSymbols).then(
                 function(promise){tailorData(promise.data)},
                 function(){
