@@ -57,6 +57,11 @@ bzseControllers.controller('BZSEController', [
             BZSEFactory.getSymbolData(cleanSymbols).then(
                 function(promise){tailorData(promise.data)},
                 function(){
+                    ngToast.create({
+                        className: 'warning',
+                        content: 'Unable to reach Benzinga API – limited data available'
+                    });
+
                     BZSEFactory.getMockSymbolData(cleanSymbols).then(
                         function(mockData){tailorData(mockData)}
                     );
