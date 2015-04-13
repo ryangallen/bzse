@@ -63,14 +63,14 @@ bzseControllers.controller('BZSEController', [
             if (cost < $scope.bzse.cash){
                 var portfolioItem = getPortfolioItem(data.symbol);
                 if (portfolioItem){
-                    portfolioItem.priceLastPaid = data.askPrice;
-                    portfolioItem.qtyLastPurchased = data.quantity,
+                    portfolioItem.priceLastPurchased = data.askPrice;
+                    portfolioItem.qtyLastPurchased = data.quantity;
                     portfolioItem.quantity += data.quantity;
                 } else {
                     portfolioItem = {
                         name: data.name,
                         symbol: data.symbol,
-                        priceLastPaid: data.askPrice,
+                        priceLastPurchased: data.askPrice,
                         qtyLastPurchased: data.quantity,
                         quantity: data.quantity,
                     }
@@ -81,20 +81,41 @@ bzseControllers.controller('BZSEController', [
                     $scope.bzse.symbols.data, {symbol: data.symbol}
                 ).portfolio = portfolioItem;
 
-                $scope.bzse.cash -= cost;
-
-                ngToast.create('Successfully bought ' + data.quantity + ' ' +
+                $scope.bzse.cash -= parseFloat(cost);
+                ngToast.create('Bought ' + data.quantity + ' ' +
                                data.name + ' stocks for $' + cost + '.');
             } else {
                 ngToast.create({
                     className: 'danger',
-                    content: 'You cannot afford to buy that many.'
+                    content: 'You cannot afford to buy ' + data.quantity + ' ' +
+                              data.name + ' stocks.'
                 });
             }
         }
 
         $scope.sellStock = function(data){
-            console.log('selling');
+            var portfolioItem = getPortfolioItem(data.symbol);
+            if (portfolioItem && portfolioItem.quantity >= data.quantity){
+                portfolioItem.priceLastSold = data.bidPrice;
+                portfolioItem.qtyLastSold = data.quantity;
+                portfolioItem.quantity -= data.quantity;
+
+                _.findWhere(
+                    $scope.bzse.symbols.data, {symbol: data.symbol}
+                ).portfolio = portfolioItem;
+
+                var earning = (data.bidPrice * data.quantity).toFixed(2);
+                $scope.bzse.cash += parseFloat(earning);
+                ngToast.create('Sold ' + data.quantity + ' ' +
+                               data.name + ' stocks for $' + earning + '.');
+
+            } else {
+                ngToast.create({
+                    className: 'danger',
+                    content: 'You do not have ' + data.quantity + ' ' +
+                              data.name + ' stocks to sell.'
+                });
+            }
         }
 
         $scope.viewCurrent = function(symbol){

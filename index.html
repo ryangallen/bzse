@@ -119,6 +119,7 @@
                         <th>Company</th>
                         <th>Quantity</th>
                         <th>Last Purchase</th>
+                        <th>Last Sale</th>
                         <th>View Current</th>
                     </tr>
                 </thead>
@@ -128,9 +129,18 @@
                         <td>[[ item.quantity ]]</td>
                         <td>
                             [[ item.qtyLastPurchased ]] @
-                            [[ item.priceLastPaid | currency ]]
+                            [[ item.priceLastPurchased | currency ]]
                             <span class="muted">
-                                ([[ item.priceLastPaid * item.qtyLastPurchased | currency ]])
+                                ([[ item.priceLastPurchased * item.qtyLastPurchased | currency ]])
+                            </span>
+                        </td>
+                        <td>
+                            <span ng-if="item.qtyLastSold">
+                                [[ item.qtyLastSold ]] @
+                                [[ item.priceLastSold | currency ]]
+                                <span class="muted">
+                                    ([[ item.priceLastSold * item.qtyLastSold | currency ]])
+                                </span>
                             </span>
                         </td>
                         <td>
