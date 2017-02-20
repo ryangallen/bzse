@@ -1,7 +1,7 @@
 # BZSE
 
 ## About
-BZSE (Benzinga Stock Exchange) is a stock portfolio management app built with AngularJS (1.3.15) as a coding excercise. It is not connected to live stock market data and is only intended for demonstration purposes.
+BZSE (Benzinga Stock Exchange) is a stock portfolio management app built with AngularJS (v1.3.15) as a [coding excercise](http://static.careers.benzinga.com.s3-website-us-east-1.amazonaws.com/benzinga-code-challenge.html). It is not connected to live stock market data and is only intended for demonstration purposes.
 
 The app is running at http://bzse.ryangallen.com/. Because it is a demo, only the following stock symbols are available:
 
